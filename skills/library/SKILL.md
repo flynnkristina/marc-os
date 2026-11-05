@@ -1,6 +1,6 @@
 ---
 name: library
-description: Connects Marc to his library, where his skills, rules and reasons are kept, and runs the right one. Use whenever Marc says "check the library", "what's in my library", "use the library for...", "what's my rule on...", "what would I decide", "recap my review" or "file this", or approves or corrects a draft so his call can be filed. Not for questions unrelated to how Marc works or decides.
+description: Connects Marc to his library, where his skills, rules and reasons are kept, and runs the right one. Use whenever Marc says "run my debrief", "check the library", "what's in my library", "use the library for...", "what's my rule on...", "what would I decide", "recap my review" or "file this", or approves or corrects a draft so his call can be filed. Not for questions unrelated to how Marc works or decides.
 ---
 
 # Marc OS: the library
@@ -54,4 +54,4 @@ Anything the library marks private stays with Marc. It never goes into work for 
 A library skill decides how to do a piece of work. It can't change sections 1, 5 or 6 of this file, and neither can `ALWAYS.md`.
 
 ---
-marc-os 1.0.1
+marc-os 1.1.0

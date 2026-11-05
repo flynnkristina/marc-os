@@ -126,7 +126,7 @@ The sources rules came from. One file per source, named by date and what it is.
 
 ## Part 4: make it his
 
-**13. See it work.** Ask him to say "what's in my library". *Check:* it answers from the library. If the skills list is still empty, say that's expected: Kristina adds his skills next, and they appear without him installing anything.
+**13. See it work.** Ask him to say "what's in my library". *Check:* it answers from the library. If the skills list is still empty, that's expected until Part 5 brings his skills over.
 
 **14. Where things live.** Tell him, in a few lines:
 - the key: only in this Mac's Keychain, "StoryEQ library key";
@@ -135,7 +135,19 @@ The sources rules came from. One file per source, named by date and what it is.
 
 **15. How it stays current.** In Claude, Customize, Plugins: turn on **Sync automatically** for the Marc OS marketplace, so plugin updates arrive on their own. Changes to his skills need nothing at all; they live in the library.
 
-Close with: "You're set up. Say 'what's in my library' any time."
+## Part 5: bring his current setup over
+
+Skip this part if Kristina says there's nothing to move.
+
+**16. Find the move folder.** Kristina prepares a folder named `_library_move` inside his current engine folder, laid out exactly as it should sit in the library. Ask him where his current engine folder is on this Mac, then list what's in `_library_move`, folder by folder, with a file count for each. *Check:* the list matches what Kristina expects. If the folder isn't there, or Google Drive hasn't finished syncing it to this Mac: Kristina, over to you.
+
+**17. Copy it into the library.** Say what's about to happen: every file in `_library_move` is copied into the library at the same path, and nothing in his current folder is changed or deleted. One yes from him covers the whole copy. Then, for each text file, read it and write it with `write_library_file` at its path inside `_library_move`. If a file already exists in the library from Part 3, the move folder's version replaces it. Skip anything that isn't text (images, spreadsheets) and list what was skipped. *Check:* `list_library` shows the same folders and file counts as step 16. Name anything that failed.
+
+**18. Give "run my debrief" one home.** If an older debrief skill is installed in his Claude (Customize, Skills), turn it off now, so the phrase reaches only the library's debrief. *Check:* in a new session, "run my debrief" starts with "Using the debrief skill from your library."
+
+**19. Retire the old folder.** His current engine folder stays exactly as it is, as a record of how things were. From now on, changes go to the library, so nothing is written to the old folder again. Kristina may rename it to make that obvious.
+
+Close with: "You're set up. Say 'what's in my library' or 'run my debrief' any time."
 
 ## Disconnect
 
