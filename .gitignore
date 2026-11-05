@@ -1,0 +1,10 @@
+.DS_Store
+*.key
+*.pem
+*.json.key
+*service-account*.json
+library-*.json
+.env
+# iCloud conflict copies ("name 2.js")
+* [0-9].*
+* [0-9]

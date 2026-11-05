@@ -1,0 +1,10 @@
+{
+  "name": "marc-os",
+  "displayName": "Marc OS",
+  "version": "1.0.0",
+  "description": "Marc's own plugin. One skill connects to his library and runs the skills and rules kept there; another sets the library up on his Mac.",
+  "author": {
+    "name": "Kristina Flynn, StoryEQ"
+  },
+  "license": "UNLICENSED"
+}

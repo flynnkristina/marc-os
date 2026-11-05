@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "library": {
+      "command": "/bin/sh",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/connector/start.sh"],
+      "env": {
+        "LIBRARY_PLUGIN": "marc-os",
+        "LIBRARY_NAME": "library"
+      }
+    }
+  }
+}

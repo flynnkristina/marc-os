@@ -1,0 +1,14 @@
+{
+  "name": "marc-os",
+  "description": "Marc's marketplace. Holds Marc OS only.",
+  "owner": {
+    "name": "Kristina Flynn, StoryEQ"
+  },
+  "plugins": [
+    {
+      "name": "marc-os",
+      "source": "./",
+      "description": "Marc's own plugin. Connects to his library and runs the skills and rules kept there."
+    }
+  ]
+}
