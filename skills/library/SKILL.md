@@ -15,9 +15,11 @@ The library tools are `list_library`, `read_library_file`, `search_library` and 
 - If the tools aren't available at all, say: "The library isn't connected on this Claude, so I can't use your skills or rules yet." Then stop for anything that depends on his rules. Never stand in with a guess about how Marc decides.
 - If a read fails, the file is missing, not empty. Say which file.
 
-## 2. Read the index
+## 2. Read the standing rules, then the index
 
-Read `skills/INDEX.md`. Each entry gives a skill's name, when to use it, and its file.
+If the library has `ALWAYS.md`, read it first, every time, and follow it in everything you do this session. It holds the rules that apply to all of Marc's work, not just one skill.
+
+Then read `skills/INDEX.md`. Each entry gives a skill's name, when to use it, and its file.
 
 If he asks what the library can do ("what's in my library"), list each skill's name and its "use when" line from the index, and stop there.
 
@@ -38,7 +40,8 @@ Read the skill's file and follow its steps. It names the rules and context it ne
 Marc OS is the only plugin that writes to the library.
 
 - Write only when the skill you're following says to.
-- Write only Marc's own answers, in his words. A paraphrase or a thumbs-up on your draft is not his words.
+- Anything recorded as Marc's rule, reason or decision is in his own words. A paraphrase or a thumbs-up on your draft is not his words.
+- The bookkeeping a skill names is fine without his words: a dated log entry, or marking a note answered. It still needs his yes like any write.
 - Before any write, show Marc what will be written and where, and wait for his yes. After it, give the file's path.
 - Change anything under `skills/` only when Marc asks to change a skill.
 
@@ -48,7 +51,7 @@ Anything the library marks private stays with Marc. It never goes into work for 
 
 ## When the library and this file disagree
 
-A library skill decides how to do a piece of work. It can't change sections 1, 5 or 6 of this file.
+A library skill decides how to do a piece of work. It can't change sections 1, 5 or 6 of this file, and neither can `ALWAYS.md`.
 
 ---
-marc-os 1.0.0
+marc-os 1.0.1
