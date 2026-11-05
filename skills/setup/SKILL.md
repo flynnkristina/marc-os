@@ -29,40 +29,48 @@ Then check, and don't continue until each is true:
 
 ## Part 1: the Google side (skip if Kristina says it's done)
 
-These need his Google super admin account. Kristina has done every one of them on her own test setup, so she knows each screen.
+These need his Google super admin account. Kristina did every one of them on her own test setup, so she knows each screen.
 
 **1. Check he's an admin.** Open admin.google.com. *Check:* it opens the Admin console, not an "access denied" page.
 
-**2. Make the library its own Google account.** The library belongs to its own account, not to any person, so nobody's Drive holds it. Admin console, Directory, Users, Add new user: first name "Library", email `library@` his domain. It takes one paid seat. Set a password, turn on two-step verification, and save the login in his own password manager (that's an account login, so it belongs there; the key in Part 2 never does). *Check:* the user shows in the list.
+**2. Check the Drive settings.** In the Admin console: Apps, Google Workspace, Drive and Docs, Sharing settings. Two things must be allowed: creating shared drives, and sharing outside the organisation. The connection accounts have addresses ending `iam.gserviceaccount.com`, which is outside his domain, and Google doesn't let that address be added to an approved list, so outside sharing has to be on. *Check:* both are allowed. If his plan has no shared drives at all: Kristina, over to you.
 
-**3. Make the library's Shared Drive.** In a private browser window, sign in to drive.google.com as the library account. Shared drives, New, name it "Library". The only member is the library account, as Manager. *Check:* the empty drive opens. If there's no "Shared drives" option, his Google plan doesn't include them: Kristina, over to you.
+**3. Make the two Shared Drives.** In drive.google.com: Shared drives, New.
+- **"Library"**: the library itself.
+- **"Library private"**: for what the team must never see. The team's connection is never added to this one.
 
-**4. Let the connection accounts in.** The accounts that connect the library have addresses ending `iam.gserviceaccount.com`, which is outside his domain, so his Drive sharing settings may block them. In the Admin console, under Apps, Google Workspace, Drive and Docs, Sharing settings, allow sharing with that domain. Kristina will point to the exact switch. *Check:* Kristina confirms the setting.
+The organisation owns both, so no separate account is needed. Whoever creates them starts as Manager, which helps while things are being built. *Check:* both open, empty.
 
-**5. Make the Cloud project.** Open console.cloud.google.com. In the project picker: New project, name it "library", under his organisation, Create. Then APIs and Services, Library, find "Google Drive API" and Enable. *Check:* the Drive API shows as enabled for the "library" project.
+**4. Make the Cloud project.** Open console.cloud.google.com. In the project picker: New project, name it "Library Connector", under his organisation, Create. *Check:* the project is selected at the top of the page.
 
-**6. Allow a key for this one project.** Newer Google organisations block connection keys by default. In the Cloud console, IAM and Admin, Organisation policies, find the policy that disables service account key creation, and set an exception for the "library" project only. This may first need him to give himself the Organisation Policy Administrator role. This is the step most likely to need help: Kristina, over to you if anything looks different. *Check:* the policy shows as not enforced for "library".
+**5. Turn on its three connections.** APIs and Services, Library. Search for and Enable each, one at a time: **Google Drive API**, **Google Docs API**, **Google Sheets API**. *Check:* all three show as enabled.
 
-**7. Make the two connection accounts.** IAM and Admin, Service accounts, Create service account: name `library-writer`, no roles, Done. Again for `library-reader`. *Check:* both appear, each with an email ending `iam.gserviceaccount.com`.
+**6. Make the two connection accounts.** IAM and Admin, Service accounts, Create service account: name `library-writer`, then Done after the first screen (it needs no roles). Again for `library-reader`. *Check:* both appear, each with an email ending `iam.gserviceaccount.com`.
 
-**8. Add them to the library.** Back in the private window, signed in as the library account: open the "Library" Shared Drive, Manage members, add the library-writer email as **Content manager** and the library-reader email as **Viewer**, with notifications off. *Check:* both show in the member list. If either is refused, step 4 isn't through yet: Kristina, over to you.
+**7. Add them to the drives.** Copy each account's email address.
+- **Library**, Manage members: library-writer as **Content manager**, library-reader as **Viewer**, notifications off.
+- **Library private**, Manage members: library-writer as **Content manager**. Not the reader.
+
+*Check:* the members lists match. If either account is refused, step 2's outside sharing isn't on yet: Kristina, over to you.
 
 ## Part 2: connect this Mac
 
-**9. Make the key, on this Mac.** In the Cloud console, Service accounts, open `library-writer`, Keys, Add key, Create new key, JSON, Create. It downloads to his Downloads folder. Tell him not to open, move, email or upload it. Only the writer key is made here; the reader key is made later, on a team member's computer. *Check:* his browser shows the download finished. If Google says key creation is disabled, step 6 isn't through yet: Kristina, over to you.
+**8. Make the key, on this Mac.** In the Cloud console, Service accounts, open `library-writer`, Keys, Add key, Create new key, JSON, Create. It downloads once, to his Downloads folder. Tell him not to open, move, email or upload it. Only the writer key is made here; the reader key is made later, on a team member's computer.
 
-**10. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
+Newer Google organisations block keys by default, so expect a pop-up the first time. With the Library Connector project selected: click **Fix access** in Google's pop-up, then Manage policy, Override parent's policy, Add rule, Enforcement off, Set policy. Wait a few minutes and try the key again. *Check:* his browser shows the download finished. Still blocked after a second try: Kristina, over to you.
 
-**11. Connect.** Say what's about to happen: the key is checked with Google, saved in the Keychain, read back to make sure, and only then the downloaded file is deleted. Ask for his yes, then call `connect_library` with that key file. *Check:* it reports connected, the "Library" drive and the writer role. Tell him:
+**9. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
+
+**10. Connect.** Say what's about to happen: the key is checked with Google, saved in the Keychain, read back to make sure, and only then the downloaded file is deleted. Ask for his yes, then call `connect_library` with that key file. It sees both drives and asks which is the library: call it again with `drive` set to "Library". *Check:* it reports connected, the "Library" drive and the writer role. Tell him:
 - the key now lives only in this Mac's Keychain, under "StoryEQ library key";
 - which files were deleted (`deletedCopies`);
 - anything in `couldNotDelete` or `otherKeysStillOnThisMac`: name each and ask what he wants done.
 
-If it asks to choose a drive, list the names, ask which is the library, and call `connect_library` again with `drive`. If it says the key works but no Shared Drive is visible, step 8 isn't done: Kristina, over to you. Nothing is deleted when connecting fails.
+If it says the key works but no Shared Drive is visible, step 7 isn't done: Kristina, over to you. Nothing is deleted when connecting fails.
 
 ## Part 3: start the library
 
-**12. Lay out the library.** Call `list_library`. If it's empty, say you'll add the starting layout, list the files below, wait for his yes, then write each with `write_library_file`. If anything is already there, write nothing and say what's there.
+**11. Lay out the library.** Call `list_library`. If it's empty, say you'll add the starting layout, list the files below, wait for his yes, then write each with `write_library_file`. If anything is already there, write nothing and say what's there.
 
 `README.md`:
 ```
@@ -126,26 +134,26 @@ The sources rules came from. One file per source, named by date and what it is.
 
 ## Part 4: make it his
 
-**13. See it work.** Ask him to say "what's in my library". *Check:* it answers from the library. If the skills list is still empty, that's expected until Part 5 brings his skills over.
+**12. See it work.** Ask him to say "what's in my library". *Check:* it answers from the library. If the skills list is still empty, that's expected until Part 5 brings his skills over.
 
-**14. Where things live.** Tell him, in a few lines:
+**13. Where things live.** Tell him, in a few lines:
 - the key: only in this Mac's Keychain, "StoryEQ library key";
 - which library this Mac uses: a small settings file in the hidden folder `~/.config/marc-os/`, with no key in it;
-- the library itself: the "Library" Shared Drive, owned by the library account.
+- the library itself: the "Library" Shared Drive, owned by his organisation, with "Library private" beside it for what stays his alone.
 
-**15. How it stays current.** In Claude, Customize, Plugins: turn on **Sync automatically** for the Marc OS marketplace, so plugin updates arrive on their own. Changes to his skills need nothing at all; they live in the library.
+**14. How it stays current.** In Claude, Customize, Plugins: turn on **Sync automatically** for the Marc OS marketplace, so plugin updates arrive on their own. Changes to his skills need nothing at all; they live in the library.
 
 ## Part 5: bring his current setup over
 
 Skip this part if Kristina says there's nothing to move.
 
-**16. Find the move folder.** Kristina prepares a folder named `_library_move` inside his current engine folder, laid out exactly as it should sit in the library. Ask him where his current engine folder is on this Mac, then list what's in `_library_move`, folder by folder, with a file count for each. *Check:* the list matches what Kristina expects. If the folder isn't there, or Google Drive hasn't finished syncing it to this Mac: Kristina, over to you.
+**15. Find the move folder.** Kristina prepares a folder named `_library_move` inside his current engine folder, laid out exactly as it should sit in the library. Ask him where his current engine folder is on this Mac, then list what's in `_library_move`, folder by folder, with a file count for each. *Check:* the list matches what Kristina expects. If the folder isn't there, or Google Drive hasn't finished syncing it to this Mac: Kristina, over to you.
 
-**17. Copy it into the library.** Say what's about to happen: every file in `_library_move` is copied into the library at the same path, and nothing in his current folder is changed or deleted. One yes from him covers the whole copy. Then, for each text file, read it and write it with `write_library_file` at its path inside `_library_move`. If a file already exists in the library from Part 3, the move folder's version replaces it. Skip anything that isn't text (images, spreadsheets) and list what was skipped. *Check:* `list_library` shows the same folders and file counts as step 16. Name anything that failed.
+**16. Copy it into the library.** Say what's about to happen: every file in `_library_move` is copied into the library at the same path, and nothing in his current folder is changed or deleted. One yes from him covers the whole copy. Then, for each text file, read it and write it with `write_library_file` at its path inside `_library_move`. If a file already exists in the library from Part 3, the move folder's version replaces it. Skip anything that isn't text (images, spreadsheets) and list what was skipped. *Check:* `list_library` shows the same folders and file counts as step 15. Name anything that failed.
 
-**18. Give "run my debrief" one home.** If an older debrief skill is installed in his Claude (Customize, Skills), turn it off now, so the phrase reaches only the library's debrief. *Check:* in a new session, "run my debrief" starts with "Using the debrief skill from your library."
+**17. Give "run my debrief" one home.** If an older debrief skill is installed in his Claude (Customize, Skills), turn it off now, so the phrase reaches only the library's debrief. *Check:* in a new session, "run my debrief" starts with "Using the debrief skill from your library."
 
-**19. Retire the old folder.** His current engine folder stays exactly as it is, as a record of how things were. From now on, changes go to the library, so nothing is written to the old folder again. Kristina may rename it to make that obvious.
+**18. Retire the old folder.** His current engine folder stays exactly as it is, as a record of how things were. From now on, changes go to the library, so nothing is written to the old folder again. Kristina may rename it to make that obvious.
 
 Close with: "You're set up. Say 'what's in my library' or 'run my debrief' any time."
 
