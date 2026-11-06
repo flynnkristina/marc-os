@@ -16,7 +16,7 @@ This repo is public. No keys, no passwords, no account names, no library content
 
 In the Claude desktop app: **Customize**, then **Plugins**, then **Add**, then **Add marketplace**. Enter `flynnkristina/marc-os` and install **Marc OS**. Turn on **Sync automatically**.
 
-It worked if typing `/` in a new Cowork session shows `marc-os:setup`. Then say "set up my library".
+It worked if typing `/` in a new Cowork session shows `setup` and `library` (Cowork lists them by their short names). Then say "set up my library".
 
 Claude Code:
 
