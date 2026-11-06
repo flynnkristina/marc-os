@@ -16,6 +16,16 @@ This walks Marc through setting up his library and connecting it to this Mac. It
 
 **The one rule for the key:** it lives in exactly one place, this Mac's Keychain. Not in a password manager, not on the Desktop (that syncs to iCloud), not in email or chat. If it's ever lost, the fix is a new key from Google Cloud, never a backup copy.
 
+## Open the call (5 minutes, before any step)
+
+Learned on the first live install (2026-11-06): the leader arrives without having read anything, asks "what am I doing here?" mid-install, and leaves with questions about where things live. So, before step 1:
+1. **How long have you got?** If it's under two hours, do the parts that need him first (his key, Part 2), and leave anything Kristina can do alone for later.
+2. **Where everything lives**, in four lines: his library (two shared drives in his organisation's Google, one private), his plugin (the code on GitHub, which updates itself), his key (only in this Mac's Keychain), and his team (later, through a hosted connection, never a key on their laptops).
+3. **Why it's safe**, in three lines: the writer robot only reaches the two library drives; the team's robot can only read; his key never leaves this Mac.
+4. **Which accounts are signed in:** which Claude account he's in, and which Google account the browser is using. Fix it now if either is wrong.
+
+Before each Part, say in one sentence what it's for and why it matters, then the clicks.
+
 ## Before starting
 
 Call `library_status`.
@@ -166,6 +176,8 @@ Skip this part if Kristina says there's nothing to move.
 **Last: close up.** First switch the key block back on: at the organisation, Organisation policies, open each of the two key-creation policies, Manage policy, **Inherit parent's policy**, Set policy. His key keeps working. Then remove the Organization Policy Administrator role from whoever was given it (organisation, IAM). Then, if Kristina's login was made a temporary Super Admin for Part 1, Marc removes that: Admin console, Directory, Users, Kristina, Admin roles and privileges, Super Admin off, Save. Her login stays Manager of both drives. If Marc's own sign-in was shared instead, he changes his password and checks Your devices at myaccount.google.com.
 
 Close with: "You're set up. Say 'what's in my library' or 'run my debrief' any time."
+
+Then draft a short written recap for Kristina to send him: what was set up, what he does next (in his words: "run my debrief" at the end of a chat), what's still open, and the next session's date.
 
 ## Disconnect
 

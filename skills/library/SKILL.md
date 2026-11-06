@@ -54,4 +54,4 @@ Anything the library marks private stays with Marc. It never goes into work for 
 A library skill decides how to do a piece of work. It can't change sections 1, 5 or 6 of this file, and neither can `ALWAYS.md`.
 
 ---
-marc-os 1.4.1
+marc-os 1.4.2
