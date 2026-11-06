@@ -43,7 +43,7 @@ These need his Google super admin account. Kristina did every one of them on her
 
 The organisation owns both, so no separate account is needed. **Kristina's login is the one person member of both, as Manager,** so there's always a way in. Create the drives signed in as Kristina if you can, since whoever creates a drive starts as its Manager. If Marc's login creates them, add Kristina as Manager and then remove Marc. *Check:* both open, empty, with Kristina as Manager.
 
-**4. Make the Cloud project.** Open console.cloud.google.com. In the project picker: New project, name it "Library Connector", and set the location to his organisation (if you can't see his organisation, you're in the wrong account). Create, then Select project. From here on, check the project name at the top left before each step. *Check:* the project is selected at the top of the page.
+**4. Make the Cloud project.** Open console.cloud.google.com. **First check the account picture at the top right is the login in his organisation.** With several Google accounts signed in, Google Cloud opens in whichever comes first, and a project made there lands in the wrong organisation. (Found 2026-11-06: the first project landed in the facilitator's own organisation, and adding Marc to it failed with "Domain Restricted Sharing". If you see that error, this is why: start the project again in the right account.) In the project picker: New project, name it "Library Connector", and set the location to his organisation (if you can't see his organisation, you're in the wrong account). Create, then Select project. From here on, check the project name at the top left before each step. *Check:* the project is selected at the top of the page.
 
 **5. Turn on its three connections.** APIs and Services, Library. Search for and Enable each, one at a time: **Google Drive API**, **Google Docs API**, **Google Sheets API**. *Check:* all three show as enabled.
 
@@ -59,7 +59,11 @@ The organisation owns both, so no separate account is needed. **Kristina's login
 
 **8. Make the key, on this Mac.** First, if someone else's login created the Cloud project, they give Marc's account the roles **Owner** and **Service Account Key Admin** on it (IAM and Admin, IAM, Grant access), so he can make the key himself. Then, on this Mac, signed in as Marc, in the Library Connector project: Service accounts, open `library-writer`, Keys, Add key, Create new key, JSON, Create. It downloads once, to his Downloads folder. Tell him not to open, move, email or upload it. Only the writer key is made here; the reader key is made later, on a team member's computer.
 
-Newer Google organisations block keys by default, so expect a pop-up the first time. With the Library Connector project selected: click **Fix access** in Google's pop-up, then Manage policy, Override parent's policy, Add rule, Enforcement off, Set policy. Wait a few minutes and try the key again. Still blocked: search the console for Organisation policies, filter on "disable service account", and check the policy changed is the one named in the error, since there are look-alikes. If a test key was made anywhere other than this Mac, delete that file and delete that key on the Keys tab. *Check:* his browser shows the download finished. Still blocked after that: Kristina, over to you.
+Newer Google organisations block key files by default, and the pop-up often has no Fix access button. Clear the block before he tries, signed in as the admin running Part 1:
+- Project picker, **All** tab, choose the **organisation** itself (building icon, not the project). IAM, Grant access: your own login, role **Organization Policy Administrator**, Save. That role only appears at the organisation level.
+- Still at the organisation: Organisation policies. For **both** `iam.disableServiceAccountKeyCreation` and `iam.managed.disableServiceAccountKeyCreation`: open it, Manage policy, Override parent's policy, Add rule, Enforcement off, Done, Set policy (and Set policy again on the warning). Pass: each shows "Applies to Organisation" and Not enforced.
+- Do it at the organisation, not just the project: on 2026-11-06 a project-level override showed Not enforced and still didn't take effect after 15 minutes. It's switched back on in the close-up, once his key exists.
+If a test key was made anywhere other than this Mac, delete that file and delete that key on the Keys tab. *Check:* his browser shows the download finished. Still blocked after that: Kristina, over to you.
 
 **9. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
 
@@ -159,7 +163,7 @@ Skip this part if Kristina says there's nothing to move.
 
 **18. Retire the old folder.** His current engine folder stays exactly as it is, as a record of how things were. From now on, changes go to the library, so nothing is written to the old folder again. Kristina may rename it to make that obvious.
 
-**Last: close up.** If Kristina's login was made a temporary Super Admin for Part 1, Marc removes that now: Admin console, Directory, Users, Kristina, Admin roles and privileges, Super Admin off, Save. Her login stays Manager of both drives. If Marc's own sign-in was shared instead, he changes his password and checks Your devices at myaccount.google.com.
+**Last: close up.** First switch the key block back on: at the organisation, Organisation policies, open each of the two key-creation policies, Manage policy, **Inherit parent's policy**, Set policy. His key keeps working. Then remove the Organization Policy Administrator role from whoever was given it (organisation, IAM). Then, if Kristina's login was made a temporary Super Admin for Part 1, Marc removes that: Admin console, Directory, Users, Kristina, Admin roles and privileges, Super Admin off, Save. Her login stays Manager of both drives. If Marc's own sign-in was shared instead, he changes his password and checks Your devices at myaccount.google.com.
 
 Close with: "You're set up. Say 'what's in my library' or 'run my debrief' any time."
 
