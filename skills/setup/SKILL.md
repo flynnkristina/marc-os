@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Guided setup for Marc OS - walks Marc through creating his library on Google, connecting it to this Mac, and checking it works, one step at a time, with Kristina on the call. Also checks or disconnects the library. Use when Marc says "set up my library", "set up Marc OS", "connect my library", "my library isn't connected" or "disconnect my library", right after installing Marc OS, or when the library skill reports the library isn't set up.
+description: Guided setup for Marc OS - walks Marc through creating his library on Google, connecting it to this Mac, and checking it works, one step at a time, with Kristina on the call. Also checks or disconnects the library. Use when Marc says "set up my library", "set up Marc OS", "connect my library", "my library isn't connected", "connect my private drive" or "disconnect my library", right after installing Marc OS, or when the library skill reports the library isn't set up.
 ---
 
 # Marc OS: setup
@@ -19,7 +19,7 @@ This walks Marc through setting up his library and connecting it to this Mac. It
 ## Before starting
 
 Call `library_status`.
-- **Connected:** say which library and role it's using, list the top-level folders, and stop. Nothing to set up.
+- **Connected:** say which library and role it's using and list the top-level folders. If `privateDrive` says none is connected, go to step 10b; otherwise stop, nothing to set up.
 - **Set up, but not reachable:** say what went wrong in one plain sentence, then go to Part 2.
 - **Not set up:** ask Kristina one question: "Is the Google side already done, or are we doing it now?" Done: go to Part 2. Not done: start at Part 1.
 
@@ -37,7 +37,7 @@ These need his Google super admin account. Kristina did every one of them on her
 
 **2. Check the Drive settings.** In the Admin console: Apps, Google Workspace, Drive and Docs, Sharing settings. Two things must be allowed: creating shared drives, and sharing outside the organisation. The connection accounts have addresses ending `iam.gserviceaccount.com`, which is outside his domain, and Google doesn't let that address be added to an approved list, so outside sharing has to be on. If it's off, turning it on affects the whole company, so that's Marc's call. *Check:* both are allowed. If his plan has no shared drives at all: Kristina, over to you.
 
-**3. Make the two Shared Drives.** In drive.google.com: Shared drives, New (or right-click Shared drives, New). Use the names Kristina gives you. Both are new and empty, never a drive the company already works in.
+**3. Make the two Shared Drives.** In drive.google.com: Shared drives, New (or right-click Shared drives, New). Use the names Kristina gives you. **The private drive's name must contain the word "Private"** (for example "PMF Library Private"), and the library drive's name must not: that's how the connection tells them apart. Both are new and empty, never a drive the company already works in.
 - **The library drive**: the library itself.
 - **The private drive**: for what the team must never see. The team's connection is never added to this one.
 
@@ -63,12 +63,14 @@ Newer Google organisations block keys by default, so expect a pop-up the first t
 
 **9. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
 
-**10. Connect.** Say what's about to happen: the key is checked with Google, saved in the Keychain, read back to make sure, and only then the downloaded file is deleted. Ask for his yes, then call `connect_library` with that key file. It sees both drives and asks which is the library: call it again with `drive` set to the library drive's exact name, never the private one. *Check:* it reports connected, the library drive and the writer role. Tell him:
+**10. Connect.** Say what's about to happen: the key is checked with Google, saved in the Keychain, read back to make sure, and only then the downloaded file is deleted. Ask for his yes, then call `connect_library` with that key file. It picks the drive without "Private" in its name as the library, and connects the private drive beside it. If it asks which drive is the library, call it again with `drive` set to the library drive's exact name, never the private one. *Check:* it reports connected, the library drive, the writer role, and `privateDrive` naming the private drive. Tell him:
 - the key now lives only in this Mac's Keychain, under "StoryEQ library key";
 - which files were deleted (`deletedCopies`);
 - anything in `couldNotDelete` or `otherKeysStillOnThisMac`: name each and ask what he wants done.
 
 If it says the key works but no Shared Drive is visible, step 7 isn't done: Kristina, over to you. Nothing is deleted when connecting fails.
+
+**10b. Check the private drive is connected.** If `privateDrive` says none is connected, call `connect_private_drive`. If it asks which drive, give the private drive's exact name. If it can't see another drive, library-writer isn't on the private drive yet (step 7): Kristina, over to you. *Check:* it names the private drive. Tell him: anything filed as private now goes only to that drive, which the team's connection can never open. Until it's connected, anything private is refused rather than saved in the library.
 
 ## Part 3: start the library
 

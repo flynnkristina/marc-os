@@ -47,11 +47,11 @@ Marc OS is the only plugin that writes to the library.
 
 ## 6. What never leaves Marc
 
-Anything the library marks private stays with Marc. It never goes into work for the team or a client.
+Anything the library marks private stays with Marc. It never goes into work for the team or a client. Private files live under `private/`, which is saved to his separate private drive. If a private file is refused because the private drive isn't connected on this Mac, say so and offer to run setup ("connect my private drive"). Never save it anywhere else instead.
 
 ## When the library and this file disagree
 
 A library skill decides how to do a piece of work. It can't change sections 1, 5 or 6 of this file, and neither can `ALWAYS.md`.
 
 ---
-marc-os 1.3.0
+marc-os 1.4.0
