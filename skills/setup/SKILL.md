@@ -37,7 +37,7 @@ These need his Google super admin account. Kristina did every one of them on her
 
 **2. Check the Drive settings.** In the Admin console: Apps, Google Workspace, Drive and Docs, Sharing settings. Two things must be allowed: creating shared drives, and sharing outside the organisation. The connection accounts have addresses ending `iam.gserviceaccount.com`, which is outside his domain, and Google doesn't let that address be added to an approved list, so outside sharing has to be on. If it's off, turning it on affects the whole company, so that's Marc's call. *Check:* both are allowed. If his plan has no shared drives at all: Kristina, over to you.
 
-**3. Make the two Shared Drives.** In drive.google.com: Shared drives, New (or right-click Shared drives, New). Use the names Kristina gives you. **The private drive's name must contain the word "Private"** (for example "PMF Library Private"), and the library drive's name must not: that's how the connection tells them apart. Both are new and empty, never a drive the company already works in.
+**3. Make the two Shared Drives.** In drive.google.com: Shared drives, New (or right-click Shared drives, New). Use the names Kristina gives you. **The private drive's name must contain the word "Private"** (for example "Library" and "Library Private"), and the library drive's name must not: that's how the connection tells them apart. Both are new and empty, never a drive the company already works in.
 - **The library drive**: the library itself.
 - **The private drive**: for what the team must never see. The team's connection is never added to this one.
 
