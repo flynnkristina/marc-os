@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Guided setup for Marc OS - walks Marc through creating his library on Google, connecting it to this Mac, and checking it works, one step at a time, with Kristina on the call. Also checks or disconnects the library. Use when Marc says "set up my library", "set up Marc OS", "connect my library", "my library isn't connected", "connect my private drive" or "disconnect my library", right after installing Marc OS, or when the library skill reports the library isn't set up.
+description: Guided setup for Marc OS - walks Marc through creating his library on Google, connecting it to this Mac, and checking it works, one step at a time, with Kristina on the call. Also checks or disconnects the library. Use when Marc says "set up my library", "set up Marc OS", "connect my library", "my library isn't connected", "connect my private drive", "connect my answers drive", "connect the eval bot" or "disconnect my library", right after installing Marc OS, or when the library skill reports the library isn't set up.
 ---
 
 # Marc OS: setup
@@ -29,7 +29,7 @@ Before each Part, say in one sentence what it's for and why it matters, then the
 ## Before starting
 
 Call `library_status`.
-- **Connected:** say which library and role it's using and list the top-level folders. If `privateDrive` says none is connected, go to step 10b; otherwise stop, nothing to set up.
+- **Connected:** say which library and role it's using and list the top-level folders. If `privateDrive` says none is connected, go to step 10b. If `answersDrive` or `evalBot` says not connected and Kristina says this session is for the eval bot, go to Part 6. Otherwise stop, nothing to set up.
 - **Set up, but not reachable:** say what went wrong in one plain sentence, then go to Part 2.
 - **Not set up:** ask Kristina one question: "Is the Google side already done, or are we doing it now?" Done: go to Part 2. Not done: start at Part 1.
 
@@ -75,7 +75,7 @@ Newer Google organisations block key files by default, and the pop-up often has 
 - Do it at the organisation, not just the project: on 2026-11-06 a project-level override showed Not enforced and still didn't take effect after 15 minutes. It's switched back on in the close-up, once his key exists.
 If a test key was made anywhere other than this Mac, delete that file and delete that key on the Keys tab. *Check:* his browser shows the download finished. Still blocked after that: Kristina, over to you.
 
-**9. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
+**9. Find the key.** Call `find_library_keys`. *Check:* it names one writer key. A key whose role is `evalbot` is the eval bot's, not his: leave it for Part 6 (`connect_library` refuses it anyway). Several: list them by file name and account and ask which. None: ask where it downloaded and call `find_library_keys` again with that `folder`.
 
 **10. Connect.** Say what's about to happen: the key is checked with Google, saved in the Keychain, read back to make sure, and only then the downloaded file is deleted. Ask for his yes, then call `connect_library` with that key file. It picks the drive without "Private" in its name as the library, and connects the private drive beside it. If it asks which drive is the library, call it again with `drive` set to the library drive's exact name, never the private one. *Check:* it reports connected, the library drive, the writer role, and `privateDrive` naming the private drive. Tell him:
 - the key now lives only in this Mac's Keychain, under "StoryEQ library key";
@@ -181,6 +181,29 @@ Close with: "You're set up. Say 'what's in my library' or 'run my debrief' any t
 
 Then draft a short written recap for Kristina to send him: what was set up, what he does next (in his words: "run my debrief" at the end of a chat), what's still open, and the next session's date.
 
+## Part 6: the eval bot and the answers drive
+
+Skip this part until Kristina says the eval drive and the eval bot account exist on the Google side.
+
+What it's for, in one sentence for him: a third robot guesses his answers to review cards before he answers, and his real answers sit in a drive that robot can't open, so the score stays honest.
+
+Who reaches what (say it in plain words if he asks):
+- **The library:** his writer reads and writes; the team's reader reads; the eval bot reads.
+- **The private drive:** his writer and the eval bot read and write. The team's reader has no access.
+- **The answers drive:** only his writer. The eval bot is never a member.
+
+**19. Connect the answers drive.** Call `connect_answers_drive`. It uses his key already in the Keychain and picks the drive with "answer" in its name. If it asks which, give the answers drive's exact name. *Check:* it names the answers drive. Tell him: anything filed under `answers/` now goes only there. If it can't see another drive, library-writer isn't on the answers drive as Content manager yet: Kristina, over to you. If it's refused because the eval bot is a member of that drive, stop: the bot has to be removed from it first.
+
+**20. Make the eval bot's key, on this Mac.** Same as step 8, for the `library-evalbot` service account: Keys, Add key, Create new key, JSON, Create. It downloads once, to Downloads. If the key block from step 8 is back on (the close-up switches it back on), clear it again first (both policies at the organisation, Enforcement off), and switch it back on afterwards, as in "Last: close up". *Check:* the download finished.
+
+**21. Connect the eval bot.** Call `find_library_keys` and pick the key whose role is `evalbot`. Say what's about to happen: Google is asked what the bot can see; it must see the library and the private drive and must not see the answers drive; then its key goes in the Keychain as a separate item beside his (his own key is never touched), it's read back, and the file is deleted. Ask for his yes, then call `connect_eval_bot` with that key file. *Check:* it reports connected, with `neverOpens` naming the answers drive and `yourOwnKey` unchanged. Tell him which files were deleted.
+- **It can see the answers drive:** stop. Nothing was saved. Kristina removes the bot from that drive's members, then try again.
+- **It can't reach the library or the private drive:** it says which, and the role it needs (Viewer on the library, Content manager on the private drive): Kristina, over to you.
+
+**22. Check both connections.** Call `library_status`. *Check:* his own connection still shows the library, the writer role and the private drive as before, plus `answersDrive` reachable and `evalBot` connected. The eval bot never runs inside his own sessions: it runs in a separate session that has only its own connection, started with the `startAnEvalSession` line. Kristina sets that up with the eval itself.
+
 ## Disconnect
 
 When he asks to take the library off this Mac, say what will happen: the key is removed from the Keychain and the settings file is deleted. Wait for his yes, then call `disconnect_library`. Then tell him the last step: delete that key in Google Cloud (Service accounts, library-writer, Keys), so it stops working everywhere.
+
+To take only the eval bot off this Mac, when he asks and says yes, call `disconnect_eval_bot`. His own connection stays. Then delete the bot's key in Google Cloud (Service accounts, library-evalbot, Keys).
