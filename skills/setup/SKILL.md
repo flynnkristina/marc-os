@@ -100,7 +100,7 @@ This Shared Drive is Marc's library. Marc OS connects to it and runs the skills 
 |---|---|
 | skills/ | How to do each kind of work. skills/INDEX.md lists them. |
 | judgments/ | Marc's rules, each in his own words, with his reason and its status. |
-| raw-material/ | The sources the rules came from. |
+| (his private drive) | The sources the rules came from, in private/raw-material/. The team gets the rule, never the source. |
 
 Marc OS writes here through the library-writer account, and only after Marc says yes to each write. Anything else connected reads through library-reader, and Google refuses its writes.
 ```
@@ -141,14 +141,16 @@ A rule is "confirmed" only when it's in his own words and he said yes to filing 
 Things Marc has said are not his rules: the date, what was proposed, and his reason. Nothing here is asked again.
 ```
 
-`raw-material/README.md`:
+`private/raw-material/README.md` (this one goes to his private drive, so it needs step 10b done; if the private drive isn't connected, skip it and say so):
 ```
 # Raw material
 
-The sources rules came from. One file per source, named by date and what it is.
+The sources rules came from. One file per source, named by date and what it is. Kept only in this private drive: the team gets the rule, never the source.
 ```
 
-*Check:* `list_library` shows `README.md`, `judgments`, `raw-material` and `skills`.
+Never make a `raw-material` folder in the library itself. If one is already there, say so and don't add to it.
+
+*Check:* `list_library` shows `README.md`, `judgments` and `skills`, and no `raw-material`. `list_library` with the folder `private` shows `private/raw-material`.
 
 ## Part 4: make it his
 
